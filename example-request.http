@@ -1,0 +1,17 @@
+// Check service health
+GET http://localhost:3000/health
+
+###
+// Create Audit Event
+POST http://localhost:3000/api/v1/audit-event
+Content-Type: application/json
+
+{
+    "userId": 24,
+    "tenantId": 123,
+    "eventType": "WORKSPACE_SIGIN_PERMITTED",
+    "action": "workspace.sign-in",
+    "permitted": false
+}
+
+###
