@@ -1,5 +1,5 @@
 import express from 'express'
-import { Kafka } from '@confluentinc/kafka-javascript';
+import Kafka from '@confluentinc/kafka-javascript';
 
 const app = express();
 const port = 3000
