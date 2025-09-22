@@ -1,5 +1,5 @@
 import express from 'express'
-import Kafka from '@confluentinc/kafka-javascript';
+import { Kafka } from 'kafkajs';
 
 const app = express();
 const port = 3000
@@ -26,17 +26,21 @@ app.post("/api/v1/audit-event", async (req, res) => {
     }
 
     // Send message to queue
-    const producer = new Kafka().producer({
-        'bootstrap.servers': 'localhost:9092',
-        'retry.backoff.ms': 200,
-        'message.send.max.retries': 5,
-    });
+    const producer = new Kafka({
+        clientId: 'audit-event-ingestion-service',
+        brokers: ['localhost:9092']
+    }).producer();
 
     await producer.connect();
 
     const deliveryReports = await producer.send({
         topic: 'audit-event-topic',
-        messages: [event]
+        messages: [
+            {
+                key: event.userId.toString(), 
+                value: JSON.stringify(event) 
+            }
+        ]
     });
 
     // collect logs/metrics around delivery
