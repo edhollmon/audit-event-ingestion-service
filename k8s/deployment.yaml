@@ -16,9 +16,13 @@ spec:
     spec:
       containers:
       - name: audit-event-ingestion
-        image: ehollmon/audit-event-ingestion-service:1.0
+        image: ehollmon/audit-event-ingestion-service:1.1
         ports:
         - containerPort: 3000
+        env:
+        - name: KAFKA_BROKER
+          value: "kafka:9092"
+        
 ---
 apiVersion: v1
 kind: Service
@@ -32,3 +36,4 @@ spec:
     - port: 3000         # Service port
       targetPort: 3000   # Pod containerPort
       nodePort: 30080    # External port on your node (adjust if needed)
+  

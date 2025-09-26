@@ -28,7 +28,8 @@ app.post("/api/v1/audit-event", async (req, res) => {
     // Send message to queue
     const producer = new Kafka({
         clientId: 'audit-event-ingestion-service',
-        brokers: ['localhost:9092']
+       brokers: [process.env.KAFKA_BROKER || 'kafka:9092' || 'localhost:9092']
+
     }).producer();
 
     await producer.connect();

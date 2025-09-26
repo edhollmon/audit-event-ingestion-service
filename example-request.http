@@ -1,9 +1,9 @@
 // Check service health
-GET http://localhost:3000/health
+GET http://localhost:63723/health
 
 ###
 // Create Audit Event
-POST http://localhost:3000/api/v1/audit-event
+POST http://localhost:63723/api/v1/audit-event
 Content-Type: application/json
 
 {
